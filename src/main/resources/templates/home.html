@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/bootstrap.min.css}">
 <!--    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/home.css}">-->
 
-    <title>Home</title>
+    <title>Домашняя страница</title>
     <style>
 body {
   background-image: url('https://images.unsplash.com/photo-1528731708534-816fe59f90cb?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80');
@@ -22,15 +22,15 @@ body {
     <div id="logoutDiv">
         <p>Hi <b><i><span th:text="${username}"></span></i></b>!</p>
         <form action="#" method="POST" th:action="@{/logout}">
-            <button type="submit" class="btn btn-secondary float-right">Logout</button>
+            <button type="submit" class="btn btn-secondary float-right">Выйти из системы</button>
         </form>
     </div>
     <div id="contentDiv" style="clear: right;">
         <nav style="clear: right;">
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active" id="nav-files-tab" data-toggle="tab" href="#nav-files" role="tab" aria-controls="nav-files" aria-selected="true">Files</a>
-                <a class="nav-item nav-link" id="nav-notes-tab" data-toggle="tab" href="#nav-notes" role="tab" aria-controls="nav-notes" aria-selected="false">Notes</a>
-                <a class="nav-item nav-link" id="nav-credentials-tab" data-toggle="tab" href="#nav-credentials" role="tab" aria-controls="nav-credentials" aria-selected="false">Credentials</a>
+                <a class="nav-item nav-link active" id="nav-files-tab" data-toggle="tab" href="#nav-files" role="tab" aria-controls="nav-files" aria-selected="true">Файлы</a>
+                <a class="nav-item nav-link" id="nav-notes-tab" data-toggle="tab" href="#nav-notes" role="tab" aria-controls="nav-notes" aria-selected="false">Заметки</a>
+                <a class="nav-item nav-link" id="nav-credentials-tab" data-toggle="tab" href="#nav-credentials" role="tab" aria-controls="nav-credentials" aria-selected="false">реквизиты для входа </a>
             </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
@@ -39,13 +39,13 @@ body {
                     <div class="container">
                         <div class="row" style="margin: 1em;">
                             <div class="col-sm-2">
-                                <label for="fileUpload">Upload a New File:</label>
+                                <label for="fileUpload">Загрузить новый файл:</label>
                             </div>
                             <div class="col-sm-6">
                                 <input type="file" class="form-control-file" id="fileUpload" name="fileUpload">
                             </div>
                             <div class="col-sm-4">
-                                <button type="submit" class="btn btn-dark">Upload</button>
+                                <button type="submit" class="btn btn-dark">Загрузить</button>
                             </div>
                         </div>
                     </div>
@@ -55,15 +55,15 @@ body {
                         <thead>
                         <tr>
                             <th style="width: 20%" scope="col"></th>
-                            <th style="width: 55%" scope="col">File Name</th>
-                            <th style="width: 25%" scope="col">Upload Date</th>
+                            <th style="width: 55%" scope="col">Название файла</th>
+                            <th style="width: 25%" scope="col">Время загрузки</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="file: ${fileList}">
                             <td>
                                 <a target="_blank" class="btn btn-success" th:href="@{/file/download?fileId={fileId}(fileId=${file.getFileId()})}">Download</a>
-                                <a class="btn btn-danger" th:href="@{/file/delete?fileId={fileId}(fileId=${file.getFileId()})}">Delete</a>
+                                <a class="btn btn-danger" th:href="@{/file/delete?fileId={fileId}(fileId=${file.getFileId()})}">Удалить</a>
                             </td>
                             <th scope="row" th:text="${file.getFileName()}"></th>
                             <th scope="row" th:text="${file.getFileUploadDateInString()}"></th>
@@ -82,8 +82,8 @@ body {
                         <thead>
                         <tr>
                             <th style="width: 20%" scope="col"></th>
-                            <th style="width: 20%" scope="col">Title</th>
-                            <th style="width: 60%" scope="col">Description</th>
+                            <th style="width: 20%" scope="col">Заголовок</th>
+                            <th style="width: 60%" scope="col">Описание</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -95,7 +95,7 @@ body {
                                              data-description=${note.getNoteDescription()}"
                                     th:onclick="showNoteModal(this.getAttribute('data-id'),
                                                 this.getAttribute('data-title'),
-                                                this.getAttribute('data-description'));">Edit</button>
+                                                this.getAttribute('data-description'));">Редактировать</button>
                                 <a class="btn btn-danger" id="noteDeleteButton" th:href="@{/note/delete?noteId={noteId}(noteId=${note.getNoteId()})}">Delete</a>
                             </td>
                             <th scope="row" th:text="${note.getNoteTitle()}"></th>
@@ -109,7 +109,7 @@ body {
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="noteModalLabel">Note</h5>
+                                <h5 class="modal-title" id="noteModalLabel">Примечание</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -118,11 +118,11 @@ body {
                                 <form action="#" method="POST" th:object="${note}" th:action="@{/note/new}">
                                     <input type="hidden" name="noteId" id="note-id" th:field="*{noteId}">
                                     <div class="form-group">
-                                        <label for="note-title" class="col-form-label">Title</label>
+                                        <label for="note-title" class="col-form-label">Заголовок</label>
                                         <input type="text" th:field = "*{noteTitle}" name= "noteTitle" class="form-control" id="note-title" maxlength="20" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="note-description" class="col-form-label">Description</label>
+                                        <label for="note-description" class="col-form-label">Описание</label>
                                         <textarea th:field="*{noteDescription}" class="form-control" name="noteDescription" id="note-description" rows="5" maxlength="1000" required></textarea>
                                     </div>
                                     <button id="noteSubmit" type="submit" class="d-none"></button>
@@ -147,7 +147,7 @@ body {
                         <tr>
                             <th style="width: 20%" scope="col"></th>
                             <th style="width: 35%" scope="col">URL</th>
-                            <th style="width: 20%" scope="col">Username/Email</th>
+                            <th style="width: 20%" scope="col">Username/email</th>
                             <th style="width: 25%" scope="col">Password</th>
                         </tr>
                         </thead>
